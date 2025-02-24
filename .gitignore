@@ -1,0 +1,6 @@
+rsa_key.p8
+.venv/
+.env
+.DS_Store
+pie_chart.jpg
+__pycache__/generate_jwt.cpython-311.pyc

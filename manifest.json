@@ -1,0 +1,63 @@
+{
+    "display_information": {
+        "name": "DashBot",
+        "description": "DashBot",
+        "background_color": "#115675"
+    },
+    "features": {
+        "bot_user": {
+            "display_name": "DashBot",
+            "always_online": true
+        },
+        "slash_commands": [
+            {
+                "command": "/askcortex",
+                "description": "Ask Snowflake Cortex",
+                "should_escape": false
+            }
+        ]
+    },
+    "oauth_config": {
+        "scopes": {
+            "user": [
+                "chat:write"
+            ],
+            "bot": [
+                "channels:history",
+                "channels:manage",
+                "channels:read",
+                "chat:write",
+                "chat:write.public",
+                "chat:write.customize",
+                "files:read",
+                "files:write",
+                "groups:read",
+                "groups:write",
+                "im:read",
+                "im:write",
+                "mpim:read",
+                "mpim:write",
+                "users:read",
+                "im:history",
+                "app_mentions:read",
+                "commands"
+            ]
+        }
+    },
+    "settings": {
+        "event_subscriptions": {
+            "request_url": "https://main-welcomed-toad.ngrok-free.app/slack/events",
+            "bot_events": [
+                "app_mention",
+                "message.channels",
+                "message.im"
+            ]
+        },
+        "interactivity": {
+            "is_enabled": true
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": true,
+        "token_rotation_enabled": false
+    }
+}
