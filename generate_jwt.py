@@ -12,9 +12,14 @@ from getpass import getpass
 import hashlib
 import logging
 import sys
+import os
+from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 # This class relies on the PyJWT module (https://pypi.org/project/PyJWT/).
 import jwt
+
+
+private_key_content = os.getenv("RSA_PRIVATE_KEY")
 
 logger = logging.getLogger(__name__)
 
@@ -71,15 +76,23 @@ class JWTGenerator(object):
         self.renew_time = datetime.now(timezone.utc)
         self.token = None
 
-        # Load the private key from the specified file.
-        with open(self.private_key_file_path, 'rb') as pem_in:
-            pemlines = pem_in.read()
-            try:
-                # Try to access the private key without a passphrase.
-                self.private_key = load_pem_private_key(pemlines, None, default_backend())
-            except TypeError:
-                # If that fails, provide the passphrase returned from get_private_key_passphrase().
-                self.private_key = load_pem_private_key(pemlines, get_private_key_passphrase().encode(), default_backend())
+        # # Load the private key from the specified file.
+        # with open(self.private_key_file_path, 'rb') as pem_in:
+        #     pemlines = pem_in.read()
+        #     try:
+        #         # Try to access the private key without a passphrase.
+        #         self.private_key = load_pem_private_key(pemlines, None, default_backend())
+        #     except TypeError:
+        #         # If that fails, provide the passphrase returned from get_private_key_passphrase().
+        #         self.private_key = load_pem_private_key(pemlines, get_private_key_passphrase().encode(), default_backend())
+        if private_key_content:
+            private_key = load_pem_private_key(
+                private_key_content.encode(),  # Pretvara string u bytes
+                password=None  # Ako koristiš lozinku, dodaj ovde os.getenv("RSA_PRIVATE_KEY_PASS")
+            )
+        else:
+            raise ValueError("RSA_PRIVATE_KEY is missing in environment variables")
+        
 
     def prepare_account_name_for_jwt(self, raw_account: Text) -> Text:
         """

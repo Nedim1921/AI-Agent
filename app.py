@@ -18,7 +18,8 @@ DATABASE = os.getenv("DATABASE")
 SCHEMA = os.getenv("SCHEMA")
 PASSWORD = os.getenv("PASSWORD")
 ANALYST_ENDPOINT = os.getenv("ANALYST_ENDPOINT")
-RSA_PRIVATE_KEY_PATH = os.getenv("RSA_PRIVATE_KEY_PATH")
+# RSA_PRIVATE_KEY_PATH = os.getenv("RSA_PRIVATE_KEY_PATH")
+RSA_PRIVATE_KEY = os.getenv("RSA_PRIVATE_KEY")
 STAGE = os.getenv("SEMANTIC_MODEL_STAGE")
 FILE = os.getenv("SEMANTIC_MODEL_FILE")
 SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")
@@ -154,7 +155,7 @@ def init():
         account=ACCOUNT
     )
     
-    jwt = generate_jwt.JWTGenerator(ACCOUNT, USER, RSA_PRIVATE_KEY_PATH).get_token()
+    jwt = generate_jwt.JWTGenerator(ACCOUNT, USER, RSA_PRIVATE_KEY).get_token()
     return conn, jwt
 
 # Start app
