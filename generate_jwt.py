@@ -19,7 +19,8 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 import jwt
 
 
-private_key_content = os.getenv("RSA_PRIVATE_KEY")
+private_key_content = os.getenv("RSA_PRIVATE_KEY", "").replace("\\n", "\n")
+private_key_pass = os.getenv("RSA_PRIVATE_KEY_PASS")
 
 logger = logging.getLogger(__name__)
 
@@ -86,10 +87,13 @@ class JWTGenerator(object):
         #         # If that fails, provide the passphrase returned from get_private_key_passphrase().
         #         self.private_key = load_pem_private_key(pemlines, get_private_key_passphrase().encode(), default_backend())
         if private_key_content:
-            private_key = load_pem_private_key(
-                private_key_content.encode(),  # Pretvara string u bytes
-                password=None  # Ako koristiš lozinku, dodaj ovde os.getenv("RSA_PRIVATE_KEY_PASS")
-            )
+            try:
+                private_key = load_pem_private_key(
+                    private_key_content.encode(),
+                    password=private_key_pass.encode() if private_key_pass else None
+                )
+            except ValueError as e:
+                raise ValueError(f"Failed to load private key: {e}")
         else:
             raise ValueError("RSA_PRIVATE_KEY is missing in environment variables")
         
