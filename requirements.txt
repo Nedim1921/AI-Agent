@@ -7,7 +7,6 @@ aiosignal==1.3.2
 altair==5.5.0
 annotated-types==0.7.0
 anyio==3.7.1
-appnope @ file:///home/conda/feedstock_root/build_artifacts/appnope_1649077682618/work
 asn1crypto==1.5.1
 asttokens @ file:///home/conda/feedstock_root/build_artifacts/asttokens_1698341106958/work
 astunparse==1.6.3
