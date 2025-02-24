@@ -88,7 +88,7 @@ class JWTGenerator(object):
         #         self.private_key = load_pem_private_key(pemlines, get_private_key_passphrase().encode(), default_backend())
         if private_key_content:
             try:
-                private_key = load_pem_private_key(
+                self.private_key = load_pem_private_key( 
                     private_key_content.encode(),
                     password=private_key_pass.encode() if private_key_pass else None
                 )
@@ -96,6 +96,7 @@ class JWTGenerator(object):
                 raise ValueError(f"Failed to load private key: {e}")
         else:
             raise ValueError("RSA_PRIVATE_KEY is missing in environment variables")
+
         
 
     def prepare_account_name_for_jwt(self, raw_account: Text) -> Text:
